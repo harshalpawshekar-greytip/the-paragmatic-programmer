@@ -1,0 +1,58 @@
+{
+  "name": "exercise-14",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/exercise-14/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/exercise-14",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/exercise-14/src/main.ts",
+        "tsConfig": "apps/exercise-14/tsconfig.app.json",
+        "assets": ["apps/exercise-14/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "exercise-14:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "exercise-14:build:development"
+        },
+        "production": {
+          "buildTarget": "exercise-14:build:production"
+        }
+      }
+    }
+  }
+}
